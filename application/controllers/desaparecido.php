@@ -203,6 +203,12 @@ class Desaparecido extends CI_Controller {
         
         ///////////////////////Alterado///////////////////////////////
         $retorno = $this->virtuoso_query->convert_json_to_simple_object();
+        
+        // -NOVO- NÃO EXIBE QUEM JÁ FOI ENCONTRADO //
+	if($retorno[0]->status == "Encontrada") {
+		$this->load->view('tema/pages/pessoa-nao-encontrada');	
+	}
+        
         $data['desaparecido'] = $retorno[0];
 
         
