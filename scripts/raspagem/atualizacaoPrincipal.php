@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL);
 //inserir login e senha do banco de dados
-$login = ""; // login:senha
+$login = "admin:admin"; // login:senha
     class Pessoa{
             public $nome; 
             public $apelido;
@@ -13,16 +13,16 @@ $login = ""; // login:senha
             public $estado;
             public $altura;
             public $peso;
-			public $pele;
+            public $pele;
             public $cor_cabelo;
             public $cor_olho;
-			public $mais_caracteristicas;
+            public $mais_caracteristicas;
             public $data_desaparecimento;
             public $local_desaparecimento;
-			public $circunstancia_desaparecimento;
+            public $circunstancia_desaparecimento;
             public $data_localizacao;
             public $dados_adicionais;
-			public $situacao;
+            public $situacao;
             public $fonte;
         }
         
@@ -58,7 +58,7 @@ $login = ""; // login:senha
         $nome = $aux.$nome.$aux;
         $data = $aux.$data.$aux;
         $cidade = $aux.$cidade.$aux;
-        $idade = $aux.$idade.$aux;
+       // $idade = $aux.$idade.$aux;
         $i = $aux."i".$aux;
         /* select ?id {?id foaf:name ?name.
 		  ?id des:disappearanceDate ?disappearanceDate.

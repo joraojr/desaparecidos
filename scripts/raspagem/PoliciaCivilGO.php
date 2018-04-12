@@ -76,7 +76,7 @@
                     
                     
                     $auxNome = $html3->find('h3[class="widget-title"]');
-                    $p->nome = trim($auxNome[0]->plaintext);
+                    $p->nome = html_entity_decode(trim($auxNome[0]->plaintext));
                     
                     
                     $k=0;
@@ -125,7 +125,7 @@
                         }
                         */
                         
-                        $p->sexo = certifica("Sexo:",$vet);
+                        $p->sexo = html_entity_decode(certifica("Sexo:",$vet));
                         
                         $p->datanasc = trim(certifica("Data de nascimento:",$vet));
                         if( strlen($p->datanasc) < 1){
@@ -142,8 +142,8 @@
                         
                         $naturalidade = certifica("Natural:",$vet);
                         $cidadeestado = explode("/", $naturalidade);
-                        $p->cidade = $cidadeestado[0];
-                        $p->estado = strtoupper($cidadeestado[1]);
+                        $p->cidade = html_entity_decode($cidadeestado[0]);
+                        $p->estado = html_entity_decode(strtoupper($cidadeestado[1]));
                         $p->idade = certifica("Idade:",$vet);
                         /*
                         for($i=0;$i<15;$i++){
@@ -175,8 +175,8 @@
                                                  //Naturalidade:
                         $naturalidade = certifica("Naturalidade:",$dados);
                         $cidadeestado = explode("/", $naturalidade);
-                        $p->cidade = $cidadeestado[0];
-                        $p->estado = strtoupper($cidadeestado[1]);
+                        $p->cidade = html_entity_decode($cidadeestado[0]);
+                        $p->estado = html_entity_decode(strtoupper($cidadeestado[1]));
                         
                         /*
                         $p->nome = Tira2pts($dados[0]); // nome

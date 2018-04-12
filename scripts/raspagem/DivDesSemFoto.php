@@ -52,7 +52,7 @@
                 
                 $p = new Pessoa();
                 
-                $p->nome = certifica("NOME DO DESAPARECIDO:", $dados);
+                $p->nome = html_entity_decode(certifica("NOME DO DESAPARECIDO:", $dados));
                 $p->apelido = certifica("APELIDO:", $dados);
                 $p->sexo = certifica("SEXO:", $dados);
                 $p->mais_caracteristicas = certifica("SINAIS PARTICULARES:", $dados);
@@ -61,8 +61,8 @@
                 $p->cor_olho = certifica("COR DOS OLHOS:", $dados);
                 $p->cor_cabelo = certifica("COR DOS CABELOS:", $dados);
                 $p->pele = certifica("COR DA PELE:", $dados);
-                $p->estado = certifica("ESTADO:", $dados);
-                $p->cidade = certifica("MUNICÍPIO:", $dados);
+                $p->estado = html_entity_decode(certifica("ESTADO:", $dados));
+                $p->cidade = html_entity_decode(certifica("MUNICÍPIO:", $dados));
                 if ( $p->cidade == null){
                     $p->cidade = certifica("CIDADE:", $dados);
                 }

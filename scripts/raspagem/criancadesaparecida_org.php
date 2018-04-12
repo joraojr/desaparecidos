@@ -36,7 +36,7 @@
         
         // PEGANDO O NOME DA MENINA
         $nome = $girl->find('h6');
-        $p->nome = $nome[0]->plaintext;
+        $p->nome = html_entity_decode($nome[0]->plaintext);
         
         $img = $girl->find('img');
         $p->imagem = $img[0]->src;
@@ -48,8 +48,8 @@
         
         $vet = explode("/", $cityes );
         
-        $p->cidade = $vet[0];
-        $p->estado = $vet[1];
+        $p->cidade = html_entity_decode($vet[0]);
+        $p->estado = html_entity_decode($vet[1]);
         
         
         // ACESSANDO A PAGINA ESPECIFICA
@@ -70,8 +70,8 @@
             $dadosDesaparecido[$i] = $li->plaintext;
             $i++;
         }
-        $p->idade = certifica("Idade:",$dadosDesaparecido);
-        $p->pele = certifica("Pele:",$dadosDesaparecido);
+        $p->idade = str_replace("Anos","",certifica("Idade:",$dadosDesaparecido));
+        $p->pele = html_entity_decode(certifica("Pele:",$dadosDesaparecido));
         $p->altura = certifica("Altura:",$dadosDesaparecido);
         $p->cor_cabelo = certifica("Cabelo:",$dadosDesaparecido);
         
@@ -94,7 +94,7 @@
         
         // PEGANDO O NOME DO MENINO
         $nome = $boy->find('h6');
-        $p->nome = $nome[0]->plaintext;
+        $p->nome = html_entity_decode($nome[0]->plaintext);
         
         //IMAGEM
         $img = $boy->find('img');
@@ -106,8 +106,8 @@
         
         $vet = explode("/", $cityes );
         
-        $p->cidade = $vet[0];
-        $p->estado = $vet[1];
+        $p->cidade = html_entity_decode($vet[0]);
+        $p->estado = html_entity_decode($vet[1]);
         
         
         // ACESSANDO A PAGINA ESPECIFICA
@@ -128,7 +128,7 @@
             $dadosDesaparecido[$i] = $li->plaintext;
             $i++;
         }
-        $p->idade = certifica("Idade:",$dadosDesaparecido);
+        $p->idade = str_replace("Anos","",certifica("Idade:",$dadosDesaparecido));
         $p->pele = certifica("Pele:",$dadosDesaparecido);
         $p->altura = certifica("Altura:",$dadosDesaparecido);
         $p->cor_cabelo = certifica("Cabelo:",$dadosDesaparecido);
@@ -188,7 +188,7 @@
             $dadosDesaparecido[$i] = $li->plaintext;
             $i++;
         }
-        $p->idade = certifica("Idade:",$dadosDesaparecido);
+        $p->idade = str_replace("Anos","",certifica("Idade:",$dadosDesaparecido));
         $p->pele = certifica("Pele:",$dadosDesaparecido);
         $p->altura = certifica("Altura:",$dadosDesaparecido);
         $p->cor_cabelo = certifica("Cabelo:",$dadosDesaparecido);
@@ -247,7 +247,7 @@
             $dadosDesaparecido[$i] = $li->plaintext;
             $i++;
         }
-        $p->idade = certifica("Idade:",$dadosDesaparecido);
+        $p->idade = str_replace("Anos","",certifica("Idade:",$dadosDesaparecido));
         $p->pele = certifica("Pele:",$dadosDesaparecido);
         $p->altura = certifica("Altura:",$dadosDesaparecido);
         $p->cor_cabelo = certifica("Cabelo:",$dadosDesaparecido);

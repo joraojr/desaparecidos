@@ -20,7 +20,7 @@
         
         $urlBase = "http://www.pm.sc.gov.br/desaparecidos/consulta-desaparecidos.php?&p_init="; 
         // guardo a url da página
-        for( $i=0; $i<=90; $i=$i+10){ // $i=0; $i<=90; $i=$i+10
+        for( $i=0; $i<=180; $i=$i+10){ // $i=0; $i<=90; $i=$i+10
             $html = file_get_html($urlBase.$i); // para cada página de desaparecidos guardo seu html
             foreach($html->find('div[class="item"]') as $value){
                 $cont++;
@@ -38,12 +38,12 @@
                 $p = new Pessoa();
                 
                 
-                $p->fonte = "http://www.pm.sc.gov.br/desaparecidos/consulta-desaparecidos.php?&p_init=0";
+                $p->fonte = "http://www.pm.sc.gov.br/desaparecidos/consulta-desaparecidos.php?&p_init=$i";
                 
                 
                 //$nome = explode(":", $pessoa[0]);
                 //$p->nome = $nome[1];
-                $p->nome = Tira2pts($pessoa[0]);
+                $p->nome = html_entity_decode(Tira2pts($pessoa[0]));
                 
                 
                 
@@ -54,19 +54,19 @@
                 
                 
                 //$estado = explode(":", $pessoa[2]);
-                $p->estado = Tira2pts($pessoa[2]);
+                $p->estado = html_entity_decode(Tira2pts($pessoa[2]));
                 
                 
                 
                 //$cidade = explode(":", $pessoa[3]);
-                $p->cidade = Tira2pts($pessoa[3]);
+                $p->cidade = html_entity_decode(Tira2pts($pessoa[3]));
                 
                 
                 $p->data_desaparecimento = Tira2pts($pessoa[4]);
                 
                 
                 
-                $p->circunstancia_desaparecimento = Tira2pts($pessoa[5]);
+                $p->circunstancia_desaparecimento = html_entity_decode(Tira2pts($pessoa[5]));
                 
                 
                 
