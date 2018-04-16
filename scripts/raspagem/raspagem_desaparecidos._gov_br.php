@@ -1,8 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-include("atualizacaoPrincipal.php");
-include("../simple_html_dom/simple_html_dom.php");
 
 
 
