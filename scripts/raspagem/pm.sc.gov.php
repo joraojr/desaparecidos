@@ -20,7 +20,7 @@
         
         $urlBase = "http://www.pm.sc.gov.br/desaparecidos/consulta-desaparecidos.php?&p_init="; 
         // guardo a url da página
-        for( $i=0; $i<=180; $i=$i+10){ // $i=0; $i<=90; $i=$i+10
+        for( $i=0; $i<=200; $i=$i+10){ // $i=0; $i<=90; $i=$i+10
             $html = file_get_html($urlBase.$i); // para cada página de desaparecidos guardo seu html
             foreach($html->find('div[class="item"]') as $value){
                 $cont++;

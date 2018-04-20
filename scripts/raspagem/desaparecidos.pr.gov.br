@@ -55,6 +55,8 @@ for($i = 1; $i <= 2 ; $i ++){
             $data["Fonte"] = $source;
             foreach ($html_people->find('table.form_tabela') as $metadata) {
                 foreach($metadata->find('tr') as $tr){
+                        if($tr->find('td text',1)->_[4] == NULL)
+                            break;
                         $data[$tr->find('td text',0)->_[4]] = $tr->find('td text',1)->_[4];
                 }
             }
@@ -75,6 +77,8 @@ for($i = 1; $i <= 98 ; $i ++){
             $data["Fonte"] = $source;
             foreach ($html_people->find('table.form_tabela') as $metadata) {
                 foreach($metadata->find('tr') as $tr){
+                        if($tr->find('td text',1)->_[4] == NULL)
+                            break;
                         $data[$tr->find('td text',0)->_[4]] = $tr->find('td text',1)->_[4];
                 }
             }
