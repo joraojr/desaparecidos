@@ -10,6 +10,8 @@
 require_once '../vendor/autoload.php';
 use thiagoalessio\TesseractOCR\TesseractOCR;
 
-echo (new TesseractOCR('/home/joraojr/Documentos/jorao/ufjf/Artigo Desaparecidos/jose_joao-1.jpg'))
-        ->lang('por')
-        ->run();
+$TC = new TesseractOCR('/home/joraojr/Documentos/jorao/ufjf/Artigo Desaparecidos/jose_joao-1.jpg');
+
+$result = $TC->lang('por')->run();
+
+print_r(explode("\n",$result ));
