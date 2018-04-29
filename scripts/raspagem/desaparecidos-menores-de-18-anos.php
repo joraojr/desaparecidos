@@ -1,10 +1,10 @@
 <?php
-
+//Ainda precisa criar a lógica para a paginação incluir novos registros
 include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
 
-for($i = 1; $i < 2; $i++) {
+for($i = 1; $i <= 10; $i++) {
     $page = "http://www.desaparecidos.rs.gov.br/lista/504/desaparecidos-menores-de-18-anos/$i";
     $href = "http://www.desaparecidos.rs.gov.br";
     $html = file_get_html($page);
@@ -12,8 +12,6 @@ for($i = 1; $i < 2; $i++) {
     foreach ($html->find('hgroup h1 a') as $people) {
 
         $html_people = file_get_html($href . $people->href);
-
-        //var_dump($html_people);
 
 
         $data = array();
