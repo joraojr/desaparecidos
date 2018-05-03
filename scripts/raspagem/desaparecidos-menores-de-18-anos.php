@@ -3,8 +3,8 @@
 include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
-$p = "http://www.desaparecidos.rs.gov.br/lista/504/desaparecidos-menores-de-18-anos/11";
-//$p = file_get_html($h);
+$h = "http://www.desaparecidos.rs.gov.br/lista/504/desaparecidos-menores-de-18-anos/11";
+$p = file_get_html($h);
 $i = 10;
 //$y = $p->find('section div.cConteudoListaNenhumaInfo text');
 //print_r($y);
