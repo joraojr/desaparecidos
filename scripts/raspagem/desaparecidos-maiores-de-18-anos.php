@@ -1,10 +1,11 @@
 <?php
-//Ainda precisa criar a lógica para a paginação incluir novos registros
+
 include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
-
-for($i = 1; $i <= 10; $i++) {
+$conteudo = 1;
+$i = 1;
+while ($conteudo == 1) {
     $page = "http://www.desaparecidos.rs.gov.br/lista/505/desaparecidos-maiores-de-18-anos/$i";
     $href = "http://www.desaparecidos.rs.gov.br";
     $html = file_get_html($page);
@@ -23,5 +24,12 @@ for($i = 1; $i <= 10; $i++) {
             $data["Informações"] .= $p->_[4] . "\n";
         }
         var_dump($data);
+    }
+    $i++;
+    foreach ($html->find('div.cConteudoListaNenhumaInfo text') as $h) {
+        $p = html_entity_decode($h->plaintext);
+        if ($p == "Nenhum item de lista disponível.") {
+            $conteudo = 0;
+        }
     }
 }
