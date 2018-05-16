@@ -60,7 +60,7 @@ for($i = 1; $i <= 2 ; $i ++){
                         $data[$tr->find('td text',0)->_[4]] = $tr->find('td text',1)->_[4];
                 }
             }
-            var_dump($data);
+            if(count($data) >15)var_dump($data);
     }
     
 }

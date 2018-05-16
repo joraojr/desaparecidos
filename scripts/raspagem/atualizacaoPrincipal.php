@@ -182,32 +182,14 @@ $login = "admin:admin"; // login:senha
         function atualizacao_Principal(Pessoa $p){
                 
             $format = 'application/sparql-results+json';
-	    
-            
-            
-                $p->nome = trim($p->nome);
-                $p->apelido = trim($p->apelido);
-                $p->datanasc = trim($p->datanasc); 
-                $p->sexo = trim($p->sexo);
-                $p->imagem = trim($p->imagem);
-                $p->idade = trim($p->idade);
-                $p->cidade = trim($p->cidade);
-                $p->estado = trim($p->estado);
-                $p->altura = trim($p->altura);
-                $p->peso = trim($p->peso);
-	        $p->pele = trim($p->pele);
-                $p->cor_cabelo = trim($p->cor_cabelo);
-                $p->cor_olho = trim($p->cor_olho);
-	        $p->mais_caracteristicas = trim($p->mais_caracteristicas);
-                $p->data_desaparecimento = trim($p->data_desaparecimento);
-                $p->local_desaparecimento = trim($p->local_desaparecimento);
-	        $p->circunstancia_desaparecimento = trim($p->circunstancia_desaparecimento);
-                $p->data_localizacao = trim($p->data_localizacao);
-                $p->dados_adicionais = trim($p->dados_adicionais);
-	        $p->situacao = trim($p->situacao);
-            	$p->fonte = trim($p->fonte);
-            
-            
+
+
+
+            foreach ($p as &$item) {
+                if ($p->fonte == $item || $p->imagem == $item)
+                    continue;
+                $item = html_entity_decode(trim(strtolower($item)));
+            }
          
             
             $id = existeDesaparecido($p->nome, $p->data_desaparecimento, $p->cidade);

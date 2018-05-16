@@ -31,6 +31,18 @@ for ($i = 1; $i <= 2; $i ++) {
             $metadata = explode(":", $metadata->find('text',0)->_[4]);
             $data[$metadata[0]] = $metadata[1];
         }
-        var_dump($data);
+         //var_dump($data);
+        $p = new Pessoa();
+        $p->fonte = $data["Fonte"];
+        $p->imagem = $data["Foto"];
+        $p->nome = $data["Nome"];
+        $p->idade = $data["Idade"];
+        $p->data_desaparecimento = $data["Desaparecimento"];
+        $p->local_desaparecimento = $data["Bairro"];
+        $p->cidade = $data["Cidade"];
+        $p->estado = $data["Estado"];
+
+        atualizacao_Principal($p);
+
     }
 }

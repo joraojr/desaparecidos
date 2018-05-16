@@ -30,7 +30,17 @@ for ($i = 1; $i <= 22; $i++) {
             $detalhes.= trim(($metadata->find('text',0)->_[4]));
         }
         $data["Detalhes"] = html_entity_decode($detalhes);
-        print_r($data);
+        //var_dump($data);
+        $p = new Pessoa();
+        $p->nome = $data["Nome"];
+        $p->imagem = $data["Foto"];
+        $p->fonte = $data["Fonte"];
+        $p->datanasc = $data["Data de Nascimento:"];
+        $p->data_desaparecimento = $data["Desaparecimento:"];
+        $p->local_desaparecimento = $data["Local:"];
+        $p->mais_caracteristicas = $data["Detalhes"];
+
+        atualizacao_Principal($p);
     }
 }
 
