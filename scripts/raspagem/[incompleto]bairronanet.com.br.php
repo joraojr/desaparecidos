@@ -14,17 +14,21 @@ for($i = 1; $i <= 1; $i++){
         $page_people = file_get_html($link);
 
         $data = array();
-        $data["Fonte"] = $link;
-//        $data["Nome"] = $page_people -> find('table[cellpadding=3] span.ClassMarromEscuro14', 0)->plaintext;
+//        $data["Fonte"] = $link;
 //        $data["Foto"] = $href . $page_people -> find('table[cellpadding=3] img', 0)->src;
-//        $data["Contato"] = $html -> find('span.ClassMarromNormal16', 0)->plaintext;
+//        $data["Nome"] = $page_people -> find('table[cellpadding=3] span.ClassMarromEscuro14', 0)->plaintext;
+//        $data["Situacao"] = $page_people -> find('table[cellpadding=3] span.ClassMarromEscuro14', 1)->plaintext;
+//        $data["Contato"] = $page_people -> find('table[cellpadding=3] span.ClassMarromEscuro14', 2)->plaintext;
 //
         //}
-        foreach ($page_people -> find('table[cellpadding=3]') as $inf){
+
+        foreach ($page_people -> find('table[cellpadding=3]') as $inf) {
             $info = str_get_html($inf);
-            $data[$info -> find('span.ClassCorpoTextoNormal13pt text',0)->_[4]] = $info -> find('span.ClassMarromEscuro14 text',0)->_[4];
-//            $data["Sitacao"] = $info->find('text',1)->_[4];
-//            $data["Telefone"] = $info->find('text',2)->_[4];
+            $data["Nome"] = $info->find('span.ClassMarromEscuro14 text')->plaintext;
+            $data["Situacao"] = $info->find('span.ClassMarromEscuro14 text')->plaintext;
+            $data["Telefone"] = $info->find('span.ClassMarromEscuro14 text')->plaintext;
+            print_r($inf);
+        }
 
 //            foreach ($info->find('span.ClassMarromEscuro14 text') as $inf) {
 //                $p = str_get_html($inf);
@@ -33,8 +37,8 @@ for($i = 1; $i <= 1; $i++){
 //                $data["Telefone"] = $p->plaintext;
 //                echo $inf->_[4] . "\n";
 //            }
-
+        var_dump($data);
         }
-    }
+    //}
 }
 
