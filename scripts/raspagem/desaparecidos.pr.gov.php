@@ -42,6 +42,23 @@ function getStr($begin, $end, $x){
     }
     return $str;
 }
+function dataToPerson($data){
+    $p = new Pessoa();
+    $p->imagem = $data["Foto"];
+    $p->fonte = $data["Fonte"];
+    $p->nome = $data["Nome Completo:"];
+    $p->data_desaparecimento = $data["Data (desaparecimento):"];
+    $p->idade = $data["Idade (desaparecimento):"];
+    $p->local_desaparecimento = $data["Local do desaparecimento:"];
+    $p->cor_cabelo = $data["Cor dos cabelos:"];
+    $p->altura =$data["Altura Estimada:"];
+    //montar caraceteristicas e dados adicionais
+
+    atualizacao_Principal($p);
+
+
+
+}
 
 for($i = 1; $i <= 2 ; $i ++){
     $html = str_get_html(getPage($i,"true"));
@@ -60,7 +77,7 @@ for($i = 1; $i <= 2 ; $i ++){
                         $data[$tr->find('td text',0)->_[4]] = $tr->find('td text',1)->_[4];
                 }
             }
-            if(count($data) >15)var_dump($data);
+            dataToPerson($data);
     }
     
 }
@@ -82,7 +99,7 @@ for($i = 1; $i <= 98 ; $i ++){
                         $data[$tr->find('td text',0)->_[4]] = $tr->find('td text',1)->_[4];
                 }
             }
-            var_dump($data);
+            dataToPerson($data);
     }
     
 }
