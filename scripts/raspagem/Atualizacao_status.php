@@ -30,7 +30,7 @@
         //echo $endereco;
     
         $url = urlencode($endereco);
-		$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';		
+		$sparqlURL = 'http://localhost:10035/repositories/desaparecidos3?query='.$url.'';
 
 		// deleta o status "Desaparecida" do banco
 		$curl = curl_init();
@@ -54,7 +54,7 @@
         
         
         $url = urlencode($endereco);
-        $sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';		
+        $sparqlURL = 'http://localhost:10035/repositories/desaparecidos3?query='.$url.'';
                         
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);	
@@ -79,7 +79,7 @@
     
     $url = urlencode($endereco);
     
-    $sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url;
+    $sparqlURL = 'http://localhost:10035/repositories/desaparecidos3?query='.$url;
         
     $curl = curl_init();
 	//curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);	

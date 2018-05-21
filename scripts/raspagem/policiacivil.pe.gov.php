@@ -6,28 +6,47 @@
  * and open the template in the editor.
 
 */
-//composer TesseractOCR + IMAGICK
+//composer TesseractOCR + Imagick
 
 require_once '../vendor/autoload.php';
 use thiagoalessio\TesseractOCR\TesseractOCR;
+include "../simple_html_dom/simple_html_dom.php";
 
 
-
+$url = "http://www.policiacivil.pe.gov.br/";
 $tmpfile = tempnam ("/tmp", "");
+$tmpfile2 = tempnam ("/tmp", "");
 
-$im = new Imagick();
-$im->setResolution(150,150);
-$im->readImage('/home/joraojr/Documentos/jorao/ufjf/Artigo Desaparecidos/jose_joao.pdf');
-$im->setImageFormat('png');
+$html = file_get_html($url."index.php/criancas-desaparecidas.html");
+$table =$html->find('td[valign=top] table.contentpaneopen ',1);
 
-$im->writeImages($tmpfile,false);
-$im->clear();
+foreach ($table->find('td[valign=top] table[style=width: 96%; border: 0px solid #000000;] a') as $people){
 
-$TC = new TesseractOCR($tmpfile);
-$result = $TC->lang('por')->run();
-print_r(array_filter(explode("\n",$result )));
+    $cmd = "wget -O $tmpfile " . '"' . $url . $people->href . '"';
+    exec($cmd);
+    if(filesize($tmpfile) != 0){
+        $im = new Imagick();
+        $im->setResolution(1000, 1000);
+        $im->readImage($tmpfile);
+        $im->setImageFormat('png');
+
+        $im->writeImages($tmpfile2, false);
+        $im->clear();
+        $im->destroy();
+
+        $TC = new TesseractOCR($tmpfile2);
+        $result = $TC->lang('por')->run();
+        print_r(array_filter(explode("\n", $result)));
+    }
 
 unlink($tmpfile);
+unlink($tmpfile2);
+
+}
+
+
+
+
 
 
 
