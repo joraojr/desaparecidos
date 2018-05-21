@@ -39,6 +39,7 @@ for ($i = 1; $i <= 22; $i++) {
         $p->data_desaparecimento = $data["Desaparecimento:"];
         $p->local_desaparecimento = $data["Local:"];
         $p->mais_caracteristicas = $data["Detalhes"];
+        $p->estado = "AM";
 
         atualizacao_Principal($p);
     }

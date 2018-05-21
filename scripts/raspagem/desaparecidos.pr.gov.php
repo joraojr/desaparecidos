@@ -43,7 +43,15 @@ function getStr($begin, $end, $x){
     return $str;
 }
 function dataToPerson($data){
+
+   // Tem mais dado pra colher !!
+
     $p = new Pessoa();
+
+    foreach (array_keys($data) as $key)
+        if(strpos($key,"B.O.U:") == true)
+            $data["B.O.U:"] = $data[$key];
+
     $p->imagem = $data["Foto"];
     $p->fonte = $data["Fonte"];
     $p->nome = $data["Nome Completo:"];
@@ -52,6 +60,16 @@ function dataToPerson($data){
     $p->local_desaparecimento = $data["Local do desaparecimento:"];
     $p->cor_cabelo = $data["Cor dos cabelos:"];
     $p->altura =$data["Altura Estimada:"];
+    $p->mais_caracteristicas = "Barba: " . $data["Barba::"] . ", Deficiência física: " . $data["Defici&ecirc;ncia F&iacute;sica:"] .
+        ", Trajava na ocasião: " . $data["Trajava na ocasi&atilde;o:"];
+    $p->dados_adicionais = "Informações: ". $data["Informa&ccedil;&otilde;es:"] . ", Número B.O.U: ".
+        $data['B.O.U:'];
+    $p->pele = $data["C&uacute;tis:"];
+    $p->estado = "PR";
+    $p->situacao = "Desaparecida";
+
+    //var_dump($p);
+
     //montar caraceteristicas e dados adicionais
 
     atualizacao_Principal($p);
@@ -77,12 +95,13 @@ for($i = 1; $i <= 2 ; $i ++){
                         $data[$tr->find('td text',0)->_[4]] = $tr->find('td text',1)->_[4];
                 }
             }
+            //var_dump($data);
             dataToPerson($data);
     }
     
 }
 
-for($i = 1; $i <= 98 ; $i ++){
+for($i = 1; $i <= 100 ; $i ++){
     $html = str_get_html(getPage($i,"false"));
     foreach ( $html->find('tr[onmouseover] div a[onclick]') as $id) {
             $source = 'http://www.desaparecidos.pr.gov.br/desaparecidos/desaparecidos.do?action=detalhesDesaparecido&c='. getStr('(',')',$id->onclick);
@@ -101,5 +120,4 @@ for($i = 1; $i <= 98 ; $i ++){
             }
             dataToPerson($data);
     }
-    
 }

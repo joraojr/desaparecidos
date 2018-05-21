@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 //inserir login e senha do banco de dados
 $login = "admin:admin"; // login:senha
+$BD = "http://localhost:10035/repositories/desaparecidos3";
     class Pessoa{
             public $nome; 
             public $apelido;
@@ -56,8 +57,8 @@ $login = "admin:admin"; // login:senha
 	$format = "application/sparql-results+json";
 	$aux = '"';
         $nome = $aux.$nome.$aux;
-        $data = $aux.$data.$aux;
-        $cidade = $aux.$cidade.$aux;
+        /*      $data = $aux.$data.$aux;
+              $cidade = $aux.$cidade.$aux;*/
        // $idade = $aux.$idade.$aux;
         $i = $aux."i".$aux;
         /* select ?id {?id foaf:name ?name.
@@ -70,16 +71,18 @@ $login = "admin:admin"; // login:senha
 	          FILTER regex(?city, "Joinville" , "i").
         */
 	$endereco = " PREFIX des:<http://www.desaparecidos.com.br/rdf/>
-					select ?id {?id foaf:name ?name.
-					?id des:disappearanceDate ?disappearanceDate.
-					?id des:cityDes ?city
-					FILTER regex(?name, ".$nome." , ".$i.").
-                                        FILTER regex(?disappearanceDate, ".$data.", ".$i.").
-			    		FILTER regex(?city, ".$cidade." , ".$i.").
-           			}";
-           			
-                $url = urlencode($endereco);
-        	$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'+limit+1';
+					select ?id {?id foaf:name ?name.";
+    if(!empty($data) && !is_null($data) ) $endereco .= '?id des:disappearanceDate ?disappearanceDate.';
+    if(!empty($cidade) && !is_null($cidade)) $endereco.= '?id des:cityDes ?city.';
+    $endereco .= "FILTER regex(?name, ".$nome." , ".$i.").";
+    if(!empty($data) && !is_null($data)) $endereco.="FILTER regex(?disappearanceDate, ".$aux.$data.$aux.", ".$i.")";
+	if(!empty($cidade) && !is_null($cidade)) $endereco.="FILTER regex(?city, ".$aux.$cidade.$aux." , ".$i.").";
+    $endereco.= '}';
+
+   // echo $endereco;
+
+    $url = urlencode($endereco);
+        	$sparqlURL = $GLOBALS['BD'].'?query='.$url.'+limit+1';
 
                 $curl = curl_init();
                 //curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);
@@ -126,7 +129,7 @@ $login = "admin:admin"; // login:senha
 			     PREFIX dbpprop:<http://dbpedia.org/property/>
                              select ?x where{ ?id des:id ?x} order by desc(xsd:int(?x)) limit 1";
                 $url = urlencode($consulta);
-                $sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url;//.'+limit+1';
+                $sparqlURL = $GLOBALS['BD'].'?query='.$url;//.'+limit+1';
                 
                 $curl = curl_init();
 		//curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);	
@@ -236,7 +239,7 @@ $login = "admin:admin"; // login:senha
                         //echo $endereco."<br><br>";
                         $url = urlencode($endereco);
                         //echo $url."<br><br>";
-                        $sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';
+                        $sparqlURL = $GLOBALS['BD'].'?query='.$url.'';
                         //echo "teste ok, nome : ". $p->nome;
                         
 			$curl = curl_init();
@@ -287,7 +290,7 @@ $login = "admin:admin"; // login:senha
 					} ";
 					
 		$url = urlencode($endereco);
-		$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'+limit+1';
+		$sparqlURL = $GLOBALS['BD'].'?query='.$url.'+limit+1';
 
 		
 		$curl = curl_init();
@@ -404,7 +407,7 @@ $login = "admin:admin"; // login:senha
 						;
                         //echo $endereco."<br>"."<br>"."<br>";
                         $url = urlencode($endereco);
-			$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';		
+			$sparqlURL = $GLOBALS['BD'].'?query='.$url.'';
 
 			// deleta o desaparecido do banco
 			$curl = curl_init();
@@ -445,7 +448,7 @@ $login = "admin:admin"; // login:senha
                         
                         //echo $endereco."<br>";
                         $url = urlencode($endereco);
-			$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';		
+			$sparqlURL = $GLOBALS['BD'].'?query='.$url.'';
                         
                         $curl = curl_init();
                             curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);	

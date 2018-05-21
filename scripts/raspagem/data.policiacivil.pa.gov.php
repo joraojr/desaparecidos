@@ -10,11 +10,9 @@
 include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
-
-$url = "http://data.policiacivil.pa.gov.br";
-$html = file_get_html($url);
-
-while ($html->find('li.pager-next')) {
+$url ="http://data.policiacivil.pa.gov.br";
+for($i=0 ; $i <= 5; $i ++){
+    $html = file_get_html("http://data.policiacivil.pa.gov.br/?q=listadesaparecidos&page=$i");
     foreach ($html->find('table tr td a') as $people) {
         $html_people = file_get_html($url . $people->href);
         $data = array();
@@ -53,5 +51,5 @@ while ($html->find('li.pager-next')) {
 
         atualizacao_Principal($p);
    }
-    $html = file_get_html($url.$html->find('li.pager-next a',0)->href);
+
 }

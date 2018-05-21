@@ -4,8 +4,8 @@ include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
 
-//338 atualmente
-for ($i = 1; $i <= 338; $i++) {
+//341 atualmente
+for ($i = 1; $i <= 341; $i++) {
     $page = "http://desaparecidosdobrasil.org.br/index.php?page=search&iPage=$i";
     $html = file_get_html($page);
     foreach ($html->find('div.listing-basicinfo a') as $people) {
@@ -16,7 +16,7 @@ for ($i = 1; $i <= 338; $i++) {
         $data["Descricao"] = $html_people->find('div[id=description] p text', 0)->_[4];
         $data["Fonte"] = $people->href;
         foreach ($html_people->find('div.meta') as $metadata) {
-            $data[$metadata->find('text', 1)->_[4]] = html_entity_decode($metadata->find('text', 2)->_[4]);
+            $data[$metadata->find('text', 1)->_[4]] = $metadata->find('text', 2)->_[4];
         }
         //if(count($data)> 14) var_dump($data);
 
