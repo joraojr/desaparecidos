@@ -10,17 +10,16 @@
 include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
-
-$url = "http://data.policiacivil.pa.gov.br";
-$html = file_get_html($url);
-
-while ($html->find('li.pager-next')) {
+$url ="http://data.policiacivil.pa.gov.br";
+for($i=0 ; $i <= 5; $i ++){
+    $html = file_get_html("http://data.policiacivil.pa.gov.br/?q=listadesaparecidos&page=$i");
     foreach ($html->find('table tr td a') as $people) {
         $html_people = file_get_html($url . $people->href);
         $data = array();
         $data['Fonte'] = $url . $people->href;
         $data['Foto'] = $html_people->find('div.field-items a img', 0)->src;
-        foreach ($html_people->find('div.field-item') as $metadata) {
+        $data['Nome'] = $html_people->find('h1.title text', 0)->_[4];
+         foreach ($html_people->find('div.field-item') as $metadata) {
             $d = trim($metadata->plaintext);
             if ($d === "")
                 continue;
@@ -31,7 +30,26 @@ while ($html->find('li.pager-next')) {
                 $data[$d[0]] = $d[1];
         }
 
-        var_dump($data);
-    }
-    $html = file_get_html($url.$html->find('li.pager-next a',0)->href);
+        $p = new Pessoa();
+        $p->imagem = $data["Foto"];
+        $p->fonte = $data["Fonte"];
+        $p->sexo = $data["Sexo:"];
+        $p->datanasc = $data["Data de nascimento:"];
+        $p->data_desaparecimento = $data["Data do desaparecimento:"];
+        $p->local_desaparecimento = $data["Local do desaparecimento:"];
+        $p->altura = $data["Altura:"];
+        $p->peso = $data["Peso:"];
+        $p->cor_olho = $data["Cor do olhos:"];
+        $p->cor_cabelo = $data["Cor do cabelo:"];
+        $p->pele = $data["Raça:"];
+        $p->circunstancia_desaparecimento = $data["Circunstância do desaparecimento:"];
+        $p->situacao = "Desaparecida";
+        $p->estado = "PA";
+        $p->nome = $data["Nome"];
+        $p->dados_adicionais = "Nome do Contato: " . trim($data["Nome do Contato:"]) . " Telefone para contato: ".
+            trim($data["Telefone para contato:"]) . " E-mail para contato: ". trim($data["E-mail para contato:"]) ;
+
+        atualizacao_Principal($p);
+   }
+
 }

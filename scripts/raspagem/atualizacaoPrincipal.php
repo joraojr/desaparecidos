@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 //inserir login e senha do banco de dados
 $login = "admin:admin"; // login:senha
+$BD = "http://localhost:10035/repositories/desaparecidos3";
     class Pessoa{
             public $nome; 
             public $apelido;
@@ -56,8 +57,8 @@ $login = "admin:admin"; // login:senha
 	$format = "application/sparql-results+json";
 	$aux = '"';
         $nome = $aux.$nome.$aux;
-        $data = $aux.$data.$aux;
-        $cidade = $aux.$cidade.$aux;
+        /*      $data = $aux.$data.$aux;
+              $cidade = $aux.$cidade.$aux;*/
        // $idade = $aux.$idade.$aux;
         $i = $aux."i".$aux;
         /* select ?id {?id foaf:name ?name.
@@ -70,16 +71,18 @@ $login = "admin:admin"; // login:senha
 	          FILTER regex(?city, "Joinville" , "i").
         */
 	$endereco = " PREFIX des:<http://www.desaparecidos.com.br/rdf/>
-					select ?id {?id foaf:name ?name.
-					?id des:disappearanceDate ?disappearanceDate.
-					?id des:cityDes ?city
-					FILTER regex(?name, ".$nome." , ".$i.").
-                                        FILTER regex(?disappearanceDate, ".$data.", ".$i.").
-			    		FILTER regex(?city, ".$cidade." , ".$i.").
-           			}";
-           			
-                $url = urlencode($endereco);
-        	$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'+limit+1';
+					select ?id {?id foaf:name ?name.";
+    if(!empty($data) && !is_null($data) ) $endereco .= '?id des:disappearanceDate ?disappearanceDate.';
+    if(!empty($cidade) && !is_null($cidade)) $endereco.= '?id des:cityDes ?city.';
+    $endereco .= "FILTER regex(?name, ".$nome." , ".$i.").";
+    if(!empty($data) && !is_null($data)) $endereco.="FILTER regex(?disappearanceDate, ".$aux.$data.$aux.", ".$i.")";
+	if(!empty($cidade) && !is_null($cidade)) $endereco.="FILTER regex(?city, ".$aux.$cidade.$aux." , ".$i.").";
+    $endereco.= '}';
+
+   // echo $endereco;
+
+    $url = urlencode($endereco);
+        	$sparqlURL = $GLOBALS['BD'].'?query='.$url.'+limit+1';
 
                 $curl = curl_init();
                 //curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);
@@ -126,7 +129,7 @@ $login = "admin:admin"; // login:senha
 			     PREFIX dbpprop:<http://dbpedia.org/property/>
                              select ?x where{ ?id des:id ?x} order by desc(xsd:int(?x)) limit 1";
                 $url = urlencode($consulta);
-                $sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url;//.'+limit+1';
+                $sparqlURL = $GLOBALS['BD'].'?query='.$url;//.'+limit+1';
                 
                 $curl = curl_init();
 		//curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);	
@@ -182,32 +185,14 @@ $login = "admin:admin"; // login:senha
         function atualizacao_Principal(Pessoa $p){
                 
             $format = 'application/sparql-results+json';
-	    
-            
-            
-                $p->nome = trim($p->nome);
-                $p->apelido = trim($p->apelido);
-                $p->datanasc = trim($p->datanasc); 
-                $p->sexo = trim($p->sexo);
-                $p->imagem = trim($p->imagem);
-                $p->idade = trim($p->idade);
-                $p->cidade = trim($p->cidade);
-                $p->estado = trim($p->estado);
-                $p->altura = trim($p->altura);
-                $p->peso = trim($p->peso);
-	        $p->pele = trim($p->pele);
-                $p->cor_cabelo = trim($p->cor_cabelo);
-                $p->cor_olho = trim($p->cor_olho);
-	        $p->mais_caracteristicas = trim($p->mais_caracteristicas);
-                $p->data_desaparecimento = trim($p->data_desaparecimento);
-                $p->local_desaparecimento = trim($p->local_desaparecimento);
-	        $p->circunstancia_desaparecimento = trim($p->circunstancia_desaparecimento);
-                $p->data_localizacao = trim($p->data_localizacao);
-                $p->dados_adicionais = trim($p->dados_adicionais);
-	        $p->situacao = trim($p->situacao);
-            	$p->fonte = trim($p->fonte);
-            
-            
+
+
+
+            foreach ($p as &$item) {
+                if ($p->fonte == $item || $p->imagem == $item)
+                    continue;
+                $item = html_entity_decode(trim(strtolower($item)));
+            }
          
             
             $id = existeDesaparecido($p->nome, $p->data_desaparecimento, $p->cidade);
@@ -254,7 +239,7 @@ $login = "admin:admin"; // login:senha
                         //echo $endereco."<br><br>";
                         $url = urlencode($endereco);
                         //echo $url."<br><br>";
-                        $sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';
+                        $sparqlURL = $GLOBALS['BD'].'?query='.$url.'';
                         //echo "teste ok, nome : ". $p->nome;
                         
 			$curl = curl_init();
@@ -305,7 +290,7 @@ $login = "admin:admin"; // login:senha
 					} ";
 					
 		$url = urlencode($endereco);
-		$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'+limit+1';
+		$sparqlURL = $GLOBALS['BD'].'?query='.$url.'+limit+1';
 
 		
 		$curl = curl_init();
@@ -422,7 +407,7 @@ $login = "admin:admin"; // login:senha
 						;
                         //echo $endereco."<br>"."<br>"."<br>";
                         $url = urlencode($endereco);
-			$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';		
+			$sparqlURL = $GLOBALS['BD'].'?query='.$url.'';
 
 			// deleta o desaparecido do banco
 			$curl = curl_init();
@@ -463,7 +448,7 @@ $login = "admin:admin"; // login:senha
                         
                         //echo $endereco."<br>";
                         $url = urlencode($endereco);
-			$sparqlURL = 'http://localhost:10035/repositories/desaparecidos2?query='.$url.'';		
+			$sparqlURL = $GLOBALS['BD'].'?query='.$url.'';
                         
                         $curl = curl_init();
                             curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);	
