@@ -11,7 +11,7 @@ include("atualizacaoPrincipal.php");
 
 
 
-for ($i = 1; $i <= 22; $i++) {
+for ($i = 1; $i <= 24; $i++) {
     $page = "http://www.policiacivil.am.gov.br/desaparecidos/pag/$i";
     $html = file_get_html($page);
     foreach ($html->find('div.grid-item a') as $people) {
