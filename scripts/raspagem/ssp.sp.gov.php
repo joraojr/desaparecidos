@@ -7,7 +7,7 @@ include("../simple_html_dom/simple_html_dom.php");
 $url = "http://200.144.31.45/desaparecidos/";
 $html = file_get_html($url);
 
-for ($i = 1; $i <= 338; $i++) {
+/*for ($i = 1; $i <= 338; $i++) {
     $html_people = file_get_html($url);
     $data = array();
     $j = 0 ;
@@ -32,4 +32,5 @@ for ($i = 1; $i <= 338; $i++) {
 
           
     
-}
+}*/
+

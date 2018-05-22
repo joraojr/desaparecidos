@@ -56,7 +56,7 @@ $BD = "http://localhost:10035/repositories/desaparecidos3";
 	function existeDesaparecido($nome, $data, $cidade){
 	$format = "application/sparql-results+json";
 	$aux = '"';
-        $nome = $aux.$nome.$aux;
+        $nome = $aux."^".$nome."$".$aux;
         /*      $data = $aux.$data.$aux;
               $cidade = $aux.$cidade.$aux;*/
        // $idade = $aux.$idade.$aux;
@@ -79,7 +79,7 @@ $BD = "http://localhost:10035/repositories/desaparecidos3";
 	if(!empty($cidade) && !is_null($cidade)) $endereco.="FILTER regex(?city, ".$aux.$cidade.$aux." , ".$i.").";
     $endereco.= '}';
 
-   // echo $endereco;
+    echo $endereco;
 
     $url = urlencode($endereco);
         	$sparqlURL = $GLOBALS['BD'].'?query='.$url.'+limit+1';
