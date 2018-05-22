@@ -4,6 +4,7 @@ include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
 
+
 for($k = 1; $k <= 5; $k++){
     $page = "http://bairronanet.com.br/desaparecidos/pagina_principal_desaparecidos.php?sit=%&&sexo=%&&olhos=%&&oculos=%&&comp=%&&barba=%&&cabelo=%&&tipo=%&&pais=%&&estado=%&&cidade=%&&bairro=%&&nome=%&&pai=%&&mae=%&&pele=%&&marcas=&&img=&&np=12&&paginaatual=$k#topodapesquisa";
     $html = file_get_html($page);
