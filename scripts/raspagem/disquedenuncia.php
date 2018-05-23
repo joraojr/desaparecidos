@@ -41,6 +41,7 @@ for ($i = 1; $i <= 24; $i ++) {
         $p->local_desaparecimento = $data["Bairro"];
         $p->cidade = $data["Cidade"];
         $p->estado = $data["Estado"];
+        $p->situacao = "Desaparecida";
 
         atualizacao_Principal($p);
 

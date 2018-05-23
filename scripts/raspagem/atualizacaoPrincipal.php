@@ -72,14 +72,14 @@ $BD = "http://localhost:10035/repositories/desaparecidos3";
         */
 	$endereco = " PREFIX des:<http://www.desaparecidos.com.br/rdf/>
 					select ?id {?id foaf:name ?name.";
-    if(!empty($data) && !is_null($data) ) $endereco .= '?id des:disappearanceDate ?disappearanceDate.';
+    /*if(!empty($data) && !is_null($data) ) */$endereco .= '?id des:disappearanceDate ?disappearanceDate.';
     if(!empty($cidade) && !is_null($cidade)) $endereco.= '?id des:cityDes ?city.';
     $endereco .= "FILTER regex(?name, ".$nome." , ".$i.").";
-    if(!empty($data) && !is_null($data)) $endereco.="FILTER regex(?disappearanceDate, ".$aux.$data.$aux.", ".$i.")";
+   /* if(!empty($data) && !is_null($data))*/ $endereco.="FILTER regex(?disappearanceDate, ".$aux.$data.$aux.", ".$i.")";
 	if(!empty($cidade) && !is_null($cidade)) $endereco.="FILTER regex(?city, ".$aux.$cidade.$aux." , ".$i.").";
     $endereco.= '}';
 
-    echo $endereco;
+    //echo $endereco;
 
     $url = urlencode($endereco);
         	$sparqlURL = $GLOBALS['BD'].'?query='.$url.'+limit+1';
@@ -188,13 +188,18 @@ $BD = "http://localhost:10035/repositories/desaparecidos3";
 
 
 
+            if(empty($p->situacao)||is_null($p->situacao)){
+                $p->situacao = "Desaparecida";
+            }
+
             foreach ($p as &$item) {
                 if ($p->fonte == $item || $p->imagem == $item)
                     continue;
                 $item = html_entity_decode(trim(strtolower($item)));
             }
          
-            
+
+
             $id = existeDesaparecido($p->nome, $p->data_desaparecimento, $p->cidade);
             //echo "ID ou -1: ".$id."<br>";
             

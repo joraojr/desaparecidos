@@ -4,8 +4,8 @@ include("../simple_html_dom/simple_html_dom.php");
 include("atualizacaoPrincipal.php");
 
 
-//341 atualmente
-for ($i = 1; $i <= 341; $i++) {
+//342 atualmente
+for ($i = 1; $i <= 342; $i++) {
     $page = "http://desaparecidosdobrasil.org.br/index.php?page=search&iPage=$i";
     $html = file_get_html($page);
     foreach ($html->find('div.listing-basicinfo a') as $people) {
@@ -29,7 +29,7 @@ for ($i = 1; $i <= 341; $i++) {
         $p->mais_caracteristicas = $data["Descricao"];
         $p->dados_adicionais = "Boletim de ocorrência:: " . $data["Boletim de ocorrência::"] . " Nr. do Boletim de Ocorrência (B.O.):" .
             $data["Nr. do Boletim de Ocorrência (B.O.):"];
-
+        $p->situacao = "Desaparecida";
         atualizacao_Principal($p);
 
     }

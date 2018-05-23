@@ -40,6 +40,7 @@ for ($i = 1; $i <= 24; $i++) {
         $p->local_desaparecimento = $data["Local:"];
         $p->mais_caracteristicas = $data["Detalhes"];
         $p->estado = "AM";
+        $p->situacao= "Desaparecida";
 
         atualizacao_Principal($p);
     }

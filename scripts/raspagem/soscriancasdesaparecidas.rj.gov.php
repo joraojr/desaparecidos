@@ -83,6 +83,7 @@ for ($i=1; $i <=ceil($total/12); $i++){
         $p->cor_olho = str_replace('</br>',"",str_replace('Cor dos Olhos:',"",$data[12]));
         $p->mais_caracteristicas = str_replace('</br>',"",$data[14]);
         $p->estado = "rj";
+        $p->situacao = "Desaparecida";
         atualizacao_Principal($p);
     }
 }
