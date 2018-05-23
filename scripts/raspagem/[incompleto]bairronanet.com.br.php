@@ -5,7 +5,7 @@ include("atualizacaoPrincipal.php");
 
 
 
-for($k = 1; $k <= 5; $k++){
+for($k = 1; $k <= 13; $k++){
     $page = "http://bairronanet.com.br/desaparecidos/pagina_principal_desaparecidos.php?sit=%&&sexo=%&&olhos=%&&oculos=%&&comp=%&&barba=%&&cabelo=%&&tipo=%&&pais=%&&estado=%&&cidade=%&&bairro=%&&nome=%&&pai=%&&mae=%&&pele=%&&marcas=&&img=&&np=12&&paginaatual=$k#topodapesquisa";
     $html = file_get_html($page);
     $href = "http://bairronanet.com.br/desaparecidos/";
@@ -14,11 +14,9 @@ for($k = 1; $k <= 5; $k++){
         $link = $href . "desaparecidos_mostra.php?cod={$people->_[4]}&linkdeacesso=pagina-pessoas-desaparecidas-btmaisinfo";
         $page_people = file_get_html($link);
 
-
         $data = array();
         $data["Fonte"] = $link;
         $data["Foto"] = $href . $page_people->find('table[cellpadding=3] img', 0)->src;
-
         $data["Nome"] = $page_people->find('table[cellpadding=3] span.ClassMarromEscuro14', 0)->plaintext;
         $data["Situacao"] = trim($page_people->find('table[cellpadding=3] span.ClassMarromEscuro14', 1)->plaintext);
         $data["Contato"] = trim($page_people->find('table[cellpadding=3] span.ClassMarromEscuro14', 2)->plaintext);
